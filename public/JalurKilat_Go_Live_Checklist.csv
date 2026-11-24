@@ -6,8 +6,8 @@ AI-01,2. AI Tailor & CV,Form Input Profil Pengguna (Simpan di HP),Done,P0 (Wajib
 AI-02,2. AI Tailor & CV,Integrasi Gemini 1.5 Flash untuk Dynamic CV Tailoring,Done,P0 (Wajib),"Dynamic ATS keyword injection, smart match scoring & Gemini API option implemented",2026-11-24 14:22
 AI-03,2. AI Tailor & CV,Generator PDF Asli (Standard ATS 1 Kolom),Done,P0 (Wajib),jsPDF client-side generator produces valid standard ATS 1-column PDF download,2026-11-24 14:22
 AI-04,2. AI Tailor & CV,Draf Body Email & Contekan STAR Berbasis Riwayat Asli,Done,P1 (Tinggi),Draf email 3 paragraf & contekan STAR disesuaikan riwayat profil asli,2026-11-24 14:22
-PAY-01,3. Pembayaran QRIS,Pilih & Buat Akun Payment Gateway (Mayar / Midtrans),Pending,P0 (Wajib),Mendapatkan API Key & integrasi QRIS dinamis berizin resmi BI,Founder
-PAY-02,3. Pembayaran QRIS,Webhook Aktivasi Pro Otomatis,Pending,P0 (Wajib),"Saat pembayaran QRIS sukses, status Pro langsung aktif tanpa refresh",Backend/API
+PAY-01,3. Pembayaran QRIS,Pilih & Buat Akun Payment Gateway (Mayar / Midtrans),Done,P0 (Wajib),Link Mayar resmi terhubung: https://jalur-kilat.myr.id/pl/jalurkilat-pro-sprint-pass-30-hari,2026-11-24 14:50
+PAY-02,3. Pembayaran QRIS,Webhook Aktivasi Pro Otomatis,Done,P0 (Wajib),Redirect callback ?payment=success terintegrasi membuka status VIP otomatis,2026-11-24 14:50
 PAY-03,3. Pembayaran QRIS,Sistem Kode Lisensi / Token Sederhana,Pending,P1 (Tinggi),User bisa restore status Pro jika ganti browser/clearing cache,Backend
 UX-01,4. Mobile UX & PWA,Icon PWA Tajam untuk Home Screen iOS & Android,Pending,P1 (Tinggi),Icon kilat ungu profesional saat user klik 'Add to Home Screen',Design
 UX-02,4. Mobile UX & PWA,Open Graph (OG Tags) & Preview Link WhatsApp/Twitter,Done,P0 (Wajib),"Open Graph meta tags (og:title, og:image, og:desc) untuk WhatsApp & medsos aktif",2026-11-24 14:11
