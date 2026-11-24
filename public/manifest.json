@@ -1,0 +1,16 @@
+{
+  "short_name": "JalurKilat",
+  "name": "JalurKilat - Asisten AI Penyiap Kerja",
+  "icons": [
+    {
+      "src": "https://api.iconify.design/heroicons:bolt-solid.svg?color=%234f46e5",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "display": "standalone",
+  "orientation": "portrait"
+}

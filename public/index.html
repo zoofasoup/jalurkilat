@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>JalurKilat - Asisten AI Penyiap Kerja</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Hide scrollbars for slick mobile tabs */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center items-center sm:p-4">
+
+  <!-- Mobile Device Simulator Frame (iPhone / Modern Android width) -->
+  <div class="w-full sm:max-w-md h-screen sm:h-[844px] bg-slate-50 flex flex-col justify-between overflow-hidden sm:rounded-[40px] sm:shadow-2xl sm:border-[8px] sm:border-slate-800 relative">
+    
+    <!-- Top App Bar / Header -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 pt-3 pb-3 shrink-0 sticky top-0 z-20">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <!-- Logo & Brand -->
+          <div class="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold shadow-sm shadow-indigo-200">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-base font-extrabold tracking-tight text-slate-900">Jalur<span class="text-indigo-600">Kilat</span></span>
+              <span id="user-status-pill" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">Free Tier</span>
+            </div>
+            <p class="text-[10px] text-slate-400 font-medium">Bypass Antrean & Tembus HRD</p>
+          </div>
+        </div>
+
+        <!-- Pro Upgrade Button / Active Status -->
+        <button onclick="openPaywall()" id="btn-header-upgrade" class="inline-flex items-center gap-1 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-full shadow-xs transition-all">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+          <span>Sprint Pass</span>
+        </button>
+      </div>
+
+      <!-- Quick Filter Pills (Only visible in Radar tab) -->
+      <div id="filter-bar" class="flex gap-2 overflow-x-auto no-scrollbar pt-3 text-xs font-semibold">
+        <button onclick="filterJobs('all')" class="filter-btn active px-3 py-1 rounded-full bg-slate-900 text-white shrink-0">Semua</button>
+        <button onclick="filterJobs('fresh')" class="filter-btn px-3 py-1 rounded-full bg-white text-slate-600 border border-slate-200 shrink-0 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>⚡ Baru < 30 mnt</span>
+        </button>
+        <button onclick="filterJobs('remote')" class="filter-btn px-3 py-1 rounded-full bg-white text-slate-600 border border-slate-200 shrink-0">Remote USD</button>
+        <button onclick="filterJobs('creative')" class="filter-btn px-3 py-1 rounded-full bg-white text-slate-600 border border-slate-200 shrink-0">Design & Kreatif</button>
+        <button onclick="filterJobs('tech')" class="filter-btn px-3 py-1 rounded-full bg-white text-slate-600 border border-slate-200 shrink-0">IT & Tech</button>
+      </div>
+    </header>
+
+    <!-- Main Scrollable Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar pb-24">
+      
+      <!-- TAB 1: RADAR LOKER FEED -->
+      <div id="tab-radar" class="space-y-3">
+        <!-- Live Alert Banner -->
+        <div class="bg-indigo-50/80 border border-indigo-100 rounded-2xl p-3 flex items-center justify-between text-xs text-indigo-900">
+          <div class="flex items-center gap-2">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
+            </span>
+            <span class="font-medium">Radar memantau <strong>14 loker baru</strong> hari ini</span>
+          </div>
+          <span class="text-[10px] text-indigo-600 font-bold bg-white px-2 py-0.5 rounded-full shadow-2xs">Live</span>
+        </div>
+
+        <!-- Job Cards Container -->
+        <div id="jobs-list" class="space-y-3">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+
+      <!-- TAB 2: SENJATA LAMARAN (CV & EMAIL GENERATOR PREVIEW) -->
+      <div id="tab-senjata" class="hidden space-y-4">
+        <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Senjata Aktif</span>
+            <span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-100">96% ATS Match</span>
+          </div>
+          <h2 class="text-lg font-extrabold text-slate-900 mb-1" id="senjata-job-title">UI/UX Designer</h2>
+          <p class="text-xs text-slate-500 mb-4" id="senjata-job-company">PT Fintek Karya Nusantara (LinkAja)</p>
+
+          <!-- Sub Tabs: CV vs Email vs Interview -->
+          <div class="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-600 mb-4">
+            <button onclick="switchSenjataTab('cv')" id="btn-sub-cv" class="py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs">CV ATS</button>
+            <button onclick="switchSenjataTab('email')" id="btn-sub-email" class="py-1.5 rounded-lg text-slate-500">Body Email</button>
+            <button onclick="switchSenjataTab('interview')" id="btn-sub-interview" class="py-1.5 rounded-lg text-slate-500">Interview</button>
+          </div>
+
+          <!-- Sub View 1: CV ATS Preview -->
+          <div id="senjata-view-cv" class="space-y-3">
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2 text-slate-700 max-h-64 overflow-y-auto">
+              <div class="border-b pb-2 font-bold text-slate-900">
+                [RINGKASAN PROFIL - DISESUAIKAN DENGAN LOKER]
+              </div>
+              <p>Product Designer dengan 2+ tahun pengalaman dalam ekosistem <span class="bg-amber-100 text-amber-900 px-1 font-bold">Fintech</span>, <span class="bg-amber-100 text-amber-900 px-1 font-bold">Design System (Figma)</span>, dan konversi checkout.</p>
+              <div class="border-b pt-2 pb-1 font-bold text-slate-900">PENGALAMAN KERJA RELEVAN</div>
+              <p>• Mengoptimasi checkout flow yang menaikkan completion rate sebesar <span class="font-bold text-emerald-700">18.4%</span> dalam 3 bulan.</p>
+              <p>• Merancang 40+ komponen UI reusable dengan kepatuhan aksesibilitas WCAG AA.</p>
+            </div>
+            <button onclick="alert('File CV ATS Tailored (PDF) berhasil diunduh ke galeri HP!')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Download PDF CV Standar ATS</span>
+            </button>
+          </div>
+
+          <!-- Sub View 2: Body Email Preview -->
+          <div id="senjata-view-email" class="hidden space-y-3">
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2 text-slate-700">
+              <p><strong>Subjek:</strong> Lamaran Kerja - UI/UX Designer - Ahmad Fauzi</p>
+              <div class="border-t pt-2 space-y-1.5 leading-relaxed">
+                <p>Halo Tim Rekrutmen LinkAja,</p>
+                <p>Saya melihat pembukaan posisi UI/UX Designer yang baru tayang hari ini. Dengan latar belakang merancang aplikasi transaksi finansial dan design system modular, saya tertarik membantu mengoptimasi user onboarding di platform LinkAja.</p>
+                <p>Terlampir CV ATS ter-tailor dan tautan portofolio interaktif saya untuk bahan pertimbangan. Saya siap untuk sesi obrolan singkat 15 menit minggu ini.</p>
+                <p>Salam hangat,<br>Ahmad Fauzi</p>
+              </div>
+            </div>
+            <button onclick="dispatchGmail()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-100">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <span>1-Tap Buka di Gmail HP (Auto-Fill)</span>
+            </button>
+          </div>
+
+          <!-- Sub View 3: Bocoran Interview -->
+          <div id="senjata-view-interview" class="hidden space-y-3">
+            <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-4 text-xs space-y-3 text-slate-800">
+              <div class="font-bold text-indigo-900 border-b border-indigo-100 pb-1 flex items-center justify-between">
+                <span>🎯 3 Bocoran Pertanyaan User:</span>
+                <span class="text-[10px] text-indigo-600 bg-white px-2 py-0.5 rounded-full font-bold">STAR Model</span>
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">1. "Bagaimana cara kamu mengukur keberhasilan sebuah redesign antarmuka?"</p>
+                <p class="text-slate-600 mt-1 italic bg-white p-2.5 rounded-xl border border-indigo-100/60"><strong>Contekan STAR:</strong> Jelaskan metrik kuantitatif (Task Completion Time & Drop-off Rate), bukan cuma aspek estetika visual.</p>
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">2. "Pernah beda pendapat dengan Product Manager?"</p>
+                <p class="text-slate-600 mt-1 italic bg-white p-2.5 rounded-xl border border-indigo-100/60"><strong>Contekan STAR:</strong> Angkat contoh pengujian A/B testing sederhana untuk menentukan keputusan berbasis data pengguna.</p>
+              </div>
+            </div>
+            <button onclick="markApplied()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Tandai Sudah Dikirim & Simpan ke Tracker</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 3: TRACKER CRM -->
+      <div id="tab-tracker" class="hidden space-y-3">
+        <div class="flex items-center justify-between mb-1">
+          <h2 class="text-base font-extrabold text-slate-900">Pipeline Lamaranmu</h2>
+          <span class="text-xs text-slate-400 font-medium" id="tracker-count">3 Lamaran Aktif</span>
+        </div>
+
+        <div id="tracker-list" class="space-y-2.5">
+          <!-- Item 1 -->
+          <div class="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">Screening HRD</span>
+              <h4 class="text-xs font-bold text-slate-900 mt-1.5">PT Fintek Karya Nusantara</h4>
+              <p class="text-[11px] text-slate-500">UI/UX Designer • Dikirim via Gmail</p>
+            </div>
+            <button class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-xl">Detail</button>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">Interview User (Besok 14:00)</span>
+              <h4 class="text-xs font-bold text-slate-900 mt-1.5">Ajaib Sekuritas</h4>
+              <p class="text-[11px] text-slate-500">Junior Product Designer • Direct HR</p>
+            </div>
+            <button onclick="switchTab('senjata')" class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-xl">Contekan</button>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full">Terkirim (1 jam lalu)</span>
+              <h4 class="text-xs font-bold text-slate-900 mt-1.5">Deel Inc (Remote USD)</h4>
+              <p class="text-[11px] text-slate-500">Customer Support Asia • Email Direct</p>
+            </div>
+            <button class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-xl">Edit</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: PRICING / UPGRADE -->
+      <div id="tab-pricing" class="hidden space-y-4">
+        <!-- Curated Pricing Card Container -->
+        <div class="bg-white rounded-3xl p-5 border border-indigo-200/80 shadow-sm relative overflow-hidden">
+          <div class="absolute -top-3 -right-3 w-16 h-16 bg-indigo-50 rounded-full flex items-end justify-start p-2">
+            <span class="text-lg">⚡</span>
+          </div>
+
+          <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-100">Sprint Pass 30 Hari</span>
+          <h2 class="text-xl font-extrabold text-slate-900 mt-2 mb-1">JalurKilat Pro</h2>
+          <div class="flex items-baseline gap-1 my-2">
+            <span class="text-3xl font-extrabold text-slate-900">Rp 49.000</span>
+            <span class="text-xs text-slate-400 font-medium">/30 hari akses</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-5 leading-relaxed">
+            Paket lengkap pelamar aktif: bypass antrean 500 orang, buka email privat HRD, dan amankan offering bulan ini.
+          </p>
+
+          <button onclick="openPaywall()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl text-xs text-center shadow-md shadow-indigo-200 transition-all mb-5">
+            Beli Sprint Pass via QRIS (Rp 49rb)
+          </button>
+
+          <div class="space-y-2.5 text-xs text-slate-700">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="font-bold text-slate-900">Bypass HRD: Direct Email & WhatsApp</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Unlimited Dynamic ATS CV Generator</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Bocoran Pertanyaan Interview STAR</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>1-Tap Buka Gmail HP Auto-Fill</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Thumb Navigation Bar -->
+    <nav class="bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 py-2 shrink-0 z-20 flex justify-around items-center">
+      <button onclick="switchTab('radar')" id="nav-radar" class="nav-item active flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-indigo-600 transition-colors">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        <span class="text-[10px] font-bold">Radar</span>
+      </button>
+
+      <button onclick="switchTab('senjata')" id="nav-senjata" class="nav-item flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-400 hover:text-slate-600 transition-colors">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+        </svg>
+        <span class="text-[10px] font-bold">Senjata</span>
+      </button>
+
+      <button onclick="switchTab('tracker')" id="nav-tracker" class="nav-item flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-400 hover:text-slate-600 transition-colors">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+        <span class="text-[10px] font-bold">Tracker</span>
+      </button>
+
+      <button onclick="switchTab('pricing')" id="nav-pricing" class="nav-item flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-400 hover:text-slate-600 transition-colors">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span class="text-[10px] font-bold">Pro</span>
+      </button>
+    </nav>
+
+    <!-- PAYWALL MODAL WITH DYNAMIC QRIS -->
+    <div id="modal-paywall" class="hidden absolute inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+      <div class="bg-white w-full sm:max-w-sm rounded-t-[32px] sm:rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto animate-slide-up">
+        
+        <!-- Modal Close Button -->
+        <div class="flex items-center justify-between">
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-100">
+            ⚡ Jalur Kilat VIP
+          </span>
+          <button onclick="closePaywall()" class="text-slate-400 hover:text-slate-600 p-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <!-- Headline -->
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900 leading-snug">Bypass 500 Pelamar Lain & Hubungi HRD Sekarang</h3>
+          <p class="text-xs text-slate-500 mt-1">Akses penuh Sprint Pass 30 Hari untuk buka email langsung, draf CV ATS, dan kontak HRD.</p>
+        </div>
+
+        <!-- QRIS Box -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center space-y-2">
+          <div class="flex items-center justify-center gap-2 mb-1">
+            <span class="text-xs font-bold text-slate-700">QRIS Standar Nasional</span>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded">Instan</span>
+          </div>
+
+          <!-- Dummy QR Code SVG -->
+          <div class="w-40 h-40 mx-auto bg-white p-2 rounded-xl border border-slate-300 shadow-2xs flex items-center justify-center">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=JalurKilat-Pass-49000" alt="QRIS JalurKilat" class="w-full h-full object-contain">
+          </div>
+
+          <div class="text-xs">
+            <span class="text-slate-500">Total Investasi:</span>
+            <span class="font-extrabold text-slate-900 text-sm ml-1">Rp 49.000</span>
+          </div>
+          <p class="text-[10px] text-slate-400">Dukungan: GoPay, OVO, Dana, ShopeePay, BCA, Livin Mandiri</p>
+        </div>
+
+        <!-- Simulate Payment CTA Button -->
+        <button onclick="simulatePaymentSuccess()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-200 transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          <span>[Simulasi] Konfirmasi Pembayaran Berhasil</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // State Management
+    let isProUser = false;
+    let currentFilter = 'all';
+
+    // Mock Jobs Data
+    const jobsData = [
+      {
+        id: 1,
+        title: "UI/UX Designer",
+        company: "PT Fintek Karya Nusantara (LinkAja)",
+        salary: "Rp 8.000.000 - Rp 11.000.000",
+        postedAgo: "8 menit lalu",
+        isFresh: true,
+        type: "creative",
+        isRemote: false,
+        applicantsCount: 420,
+        directEmail: "recruitment@linkaja.co.id",
+        hrLinkedIn: "linkedin.com/in/talent-linkaja",
+        requirements: ["Figma", "Design System", "Mobile App Onboarding"]
+      },
+      {
+        id: 2,
+        title: "Customer Support Specialist (Asia Timezone)",
+        company: "Deel Inc.",
+        salary: "$1,200 - $1,600 / bln (Rp 19 - 25 Jt)",
+        postedAgo: "19 menit lalu",
+        isFresh: true,
+        type: "remote",
+        isRemote: true,
+        applicantsCount: 680,
+        directEmail: "careers-asia@deel.com",
+        hrLinkedIn: "linkedin.com/in/deel-asia-recruiter",
+        requirements: ["English Fluency", "Zendesk", "Remote Communication"]
+      },
+      {
+        id: 3,
+        title: "Social Media & Content Strategist",
+        company: "Kopi Kenangan (Kenangan Brands)",
+        salary: "Rp 6.500.000 - Rp 8.500.000",
+        postedAgo: "34 menit lalu",
+        isFresh: false,
+        type: "creative",
+        isRemote: false,
+        applicantsCount: 290,
+        directEmail: "talent.acquisition@kopikenangan.com",
+        hrLinkedIn: "linkedin.com/in/hr-kopikenangan",
+        requirements: ["TikTok Growth", "CapCut", "Copywriting"]
+      },
+      {
+        id: 4,
+        title: "Junior Frontend Engineer (React/Next.js)",
+        company: "Ajaib Sekuritas",
+        salary: "Rp 9.000.000 - Rp 13.000.000",
+        postedAgo: "45 menit lalu",
+        isFresh: false,
+        type: "tech",
+        isRemote: false,
+        applicantsCount: 510,
+        directEmail: "tech-hiring@ajaib.co.id",
+        hrLinkedIn: "linkedin.com/in/ajaib-tech-hr",
+        requirements: ["React", "TypeScript", "Tailwind CSS"]
+      }
+    ];
+
+    // Render Jobs List
+    function renderJobs() {
+      const container = document.getElementById('jobs-list');
+      container.innerHTML = '';
+
+      const filtered = jobsData.filter(job => {
+        if (currentFilter === 'all') return true;
+        if (currentFilter === 'fresh') return job.isFresh;
+        if (currentFilter === 'remote') return job.isRemote;
+        return job.type === currentFilter;
+      });
+
+      filtered.forEach(job => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-3xl p-4 border border-slate-200/80 shadow-2xs hover:shadow-sm transition-all space-y-3";
+        
+        card.innerHTML = `
+          <!-- Top Row: Company & Badge -->
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center font-black text-indigo-700 text-xs shrink-0">
+                ${job.company.substring(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-900 leading-tight">${job.title}</h3>
+                <p class="text-[11px] text-slate-500">${job.company}</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${job.isFresh ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-slate-100 text-slate-500'}">
+              ${job.postedAgo}
+            </span>
+          </div>
+
+          <!-- Salary & Tags -->
+          <div class="flex items-center justify-between text-xs pt-1">
+            <span class="font-bold text-slate-900">${job.salary}</span>
+            <span class="text-[10px] text-slate-400 font-medium">${job.isRemote ? '🌐 Remote Global' : '📍 Jakarta'}</span>
+          </div>
+
+          <!-- JALUR KILAT DIRECT HR BOX (PAYWALL HOOK) -->
+          <div class="rounded-2xl p-2.5 ${isProUser ? 'bg-emerald-50 border border-emerald-100' : 'bg-amber-50/70 border border-amber-200/60'} text-xs flex items-center justify-between">
+            <div class="space-y-0.5">
+              <span class="text-[10px] font-bold ${isProUser ? 'text-emerald-800' : 'text-amber-800'} flex items-center gap-1">
+                ${isProUser ? '🔓 Jalur Kilat HR Terbuka' : '🔒 Jalur Kilat (Bypass ' + job.applicantsCount + ' Pelamar)'}
+              </span>
+              <p class="text-[11px] font-mono ${isProUser ? 'text-emerald-700 font-bold' : 'text-slate-500'}">
+                ${isProUser ? job.directEmail : 'r********@' + job.directEmail.split('@')[1]}
+              </p>
+            </div>
+            ${isProUser 
+              ? `<a href="mailto:${job.directEmail}" class="px-2.5 py-1 bg-emerald-600 text-white font-bold text-[10px] rounded-xl shadow-2xs">Kirim</a>`
+              : `<button onclick="openPaywall()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white font-bold text-[10px] rounded-xl shadow-2xs">Buka</button>`
+            }
+          </div>
+
+          <!-- Action Button: Siapkan Senjata -->
+          <button onclick="prepareJob(${job.id})" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-2xl flex items-center justify-center gap-1.5 transition-colors">
+            <span>⚡ Siapkan Senjata Lamaran</span>
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Prepare job into Senjata Tab
+    function prepareJob(jobId) {
+      const job = jobsData.find(j => j.id === jobId);
+      if (job) {
+        document.getElementById('senjata-job-title').innerText = job.title;
+        document.getElementById('senjata-job-company').innerText = job.company;
+        switchTab('senjata');
+      }
+    }
+
+    // Switch Bottom Tabs
+    function switchTab(tabId) {
+      const tabs = ['radar', 'senjata', 'tracker', 'pricing'];
+      tabs.forEach(t => {
+        const tabEl = document.getElementById('tab-' + t);
+        const navEl = document.getElementById('nav-' + t);
+        if (t === tabId) {
+          tabEl.classList.remove('hidden');
+          navEl.classList.add('text-indigo-600');
+          navEl.classList.remove('text-slate-400');
+        } else {
+          tabEl.classList.add('hidden');
+          navEl.classList.remove('text-indigo-600');
+          navEl.classList.add('text-slate-400');
+        }
+      });
+
+      // Filter bar only on radar
+      const filterBar = document.getElementById('filter-bar');
+      if (tabId === 'radar') {
+        filterBar.classList.remove('hidden');
+      } else {
+        filterBar.classList.add('hidden');
+      }
+    }
+
+    // Switch Sub Tabs inside Senjata
+    function switchSenjataTab(subTab) {
+      const subViews = ['cv', 'email', 'interview'];
+      subViews.forEach(v => {
+        const viewEl = document.getElementById('senjata-view-' + v);
+        const btnEl = document.getElementById('btn-sub-' + v);
+        if (v === subTab) {
+          viewEl.classList.remove('hidden');
+          btnEl.className = "py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs font-bold";
+        } else {
+          viewEl.classList.add('hidden');
+          btnEl.className = "py-1.5 rounded-lg text-slate-500 font-bold";
+        }
+      });
+    }
+
+    // Filter Jobs
+    function filterJobs(cat) {
+      currentFilter = cat;
+      const btns = document.querySelectorAll('.filter-btn');
+      btns.forEach(b => {
+        b.className = "filter-btn px-3 py-1 rounded-full bg-white text-slate-600 border border-slate-200 shrink-0 font-medium";
+      });
+      event.target.className = "filter-btn active px-3 py-1 rounded-full bg-slate-900 text-white shrink-0 font-bold";
+      renderJobs();
+    }
+
+    // 1-Tap Gmail Dispatcher
+    function dispatchGmail() {
+      const title = document.getElementById('senjata-job-title').innerText;
+      const mailtoUrl = `mailto:recruitment@company.com?subject=Lamaran%20Kerja%20-%20${encodeURIComponent(title)}%20-%20Ahmad%20Fauzi&body=Halo%20Tim%20Rekrutmen%2C%0A%0ASaya%20tertarik%20melamar%20posisi%20${encodeURIComponent(title)}.%20Terlampir%20CV%20ATS%20ter-tailor%20saya.%0A%0ASalam%2C%0AAhmad%20Fauzi`;
+      window.location.href = mailtoUrl;
+    }
+
+    // Mark Applied
+    function markApplied() {
+      alert("✅ Lamaran tersimpan ke Tracker! Data telah tercatat di antrean kamu.");
+      switchTab('tracker');
+    }
+
+    // Paywall Dialog
+    function openPaywall() {
+      document.getElementById('modal-paywall').classList.remove('hidden');
+    }
+
+    function closePaywall() {
+      document.getElementById('modal-paywall').classList.add('hidden');
+    }
+
+    // Simulate Payment Success
+    function simulatePaymentSuccess() {
+      isProUser = true;
+      closePaywall();
+
+      // Update Header Pill
+      const pill = document.getElementById('user-status-pill');
+      pill.className = "text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200";
+      pill.innerText = "VIP PRO (Aktif)";
+
+      // Update Upgrade Button in Header
+      const headerBtn = document.getElementById('btn-header-upgrade');
+      headerBtn.className = "inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1.5 rounded-full border border-emerald-200";
+      headerBtn.innerHTML = "<span>✓ VIP Aktif</span>";
+      headerBtn.onclick = null;
+
+      alert("🎉 Selamat! Status JalurKilat VIP Pro kamu telah aktif selama 30 Hari. Semua kontak privat HRD sekarang telah terbuka!");
+      renderJobs();
+    }
+
+    // Initial Render
+    renderJobs();
+  </script>
+</body>
+</html>
