@@ -113,7 +113,15 @@ def update_task_status(task_id, new_status, notes=None):
             ws.column_dimensions[col_letter].width = max(max_len + 3, 12)
 
         wb.save(XLSX_PATH)
-        print(f"✅ Successfully updated Task {task_id} to [{new_status}] in XLSX and CSV.")
+        
+        # Also sync to public directory for web serving
+        public_xlsx = os.path.join(BASE_DIR, "public", "JalurKilat_Go_Live_Checklist.xlsx")
+        public_csv = os.path.join(BASE_DIR, "public", "JalurKilat_Go_Live_Checklist.csv")
+        import shutil
+        shutil.copyfile(XLSX_PATH, public_xlsx)
+        shutil.copyfile(CSV_PATH, public_csv)
+        
+        print(f"✅ Successfully updated Task {task_id} to [{new_status}] in XLSX and CSV (both root and public/).")
         return True
 
 if __name__ == "__main__":

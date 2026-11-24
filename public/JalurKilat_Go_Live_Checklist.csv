@@ -12,6 +12,7 @@ PAY-03,3. Pembayaran QRIS,Sistem Kode Lisensi / Token Sederhana,Pending,P1 (Ting
 UX-01,4. Mobile UX & PWA,Icon PWA Tajam untuk Home Screen iOS & Android,Pending,P1 (Tinggi),Icon kilat ungu profesional saat user klik 'Add to Home Screen',Design
 UX-02,4. Mobile UX & PWA,Open Graph (OG Tags) & Preview Link WhatsApp/Twitter,Done,P0 (Wajib),"Open Graph meta tags (og:title, og:image, og:desc) untuk WhatsApp & medsos aktif",2026-11-24 14:11
 UX-03,4. Mobile UX & PWA,Tombol Bantuan / Chat WhatsApp Support,Done,P1 (Tinggi),Tombol bantuan WhatsApp support ditambahkan di footer,2026-11-24 14:22
+UX-04,4. Mobile UX & PWA,Responsive Desktop Dual-Pane Command Center,Done,P0 (Wajib),Tampilan layar lebar 2-kolom (Radar kiri + Sticky Senjata kanan) & Kanban,2026-11-24 15:00
 TRUST-01,5. Trust & Legal,Halaman Kebijakan Privasi & Disclaimer Rekrutmen,Done,P1 (Tinggi),Disclaimer legalitas rekrutmen mandiri terpasang di footer webapp,2026-11-24 14:22
 TRUST-02,5. Trust & Legal,FAQ & Panduan Cara Pakai Singkat (3 Langkah),Pending,P2 (Sedang),Petunjuk bagi orang awam agar langsung paham alur pakainya,Frontend
 MKT-01,6. Go-To-Market,3 Video Pendek TikTok/Reels Screen-Recording Demo,Pending,P0 (Wajib),Video studi kasus: 'Kirim lamaran 6 menit setelah loker tayang',Marketing
