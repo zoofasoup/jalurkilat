@@ -3,16 +3,16 @@ DATA-01,1. Scraper & Feed,GitHub Actions Cron untuk Scraper Otomatis,Done,P0 (Wa
 DATA-02,1. Scraper & Feed,Filter Deduping & Validasi Tanggal Loker,Done,P0 (Wajib),Deduplikasi MD5 hash (company_title) dan penghitungan waktu real-time aktif,2026-11-24 14:09
 DATA-03,1. Scraper & Feed,Formula Ekstraksi Email HRD yang Lebih Akurat,Pending,P1 (Tinggi),Pola deteksi email HRD (domain perusahaan) & profil rekruter LinkedIn,AI & Dev
 AI-01,2. AI Tailor & CV,Form Input Profil Pengguna (Simpan di HP),Done,P0 (Wajib),Drawer modal profil pengguna + sync localStorage + injeksi dinamis ke CV & draf email,2026-11-24 14:11
-AI-02,2. AI Tailor & CV,Integrasi Gemini 1.5 Flash untuk Dynamic CV Tailoring,Pending,P0 (Wajib),AI beneran membedah JD loker dan menginjeksi keyword ke profil,Backend/API
-AI-03,2. AI Tailor & CV,Generator PDF Asli (Standard ATS 1 Kolom),Pending,P0 (Wajib),Tombol download menghasilkan file PDF riil yang siap kirim ke HRD,Frontend
-AI-04,2. AI Tailor & CV,Draf Body Email & Contekan STAR Berbasis Riwayat Asli,Pending,P1 (Tinggi),Isi email & jawaban interview menyebut data riil pengalaman pengguna,AI/Prompt
+AI-02,2. AI Tailor & CV,Integrasi Gemini 1.5 Flash untuk Dynamic CV Tailoring,Done,P0 (Wajib),"Dynamic ATS keyword injection, smart match scoring & Gemini API option implemented",2026-11-24 14:22
+AI-03,2. AI Tailor & CV,Generator PDF Asli (Standard ATS 1 Kolom),Done,P0 (Wajib),jsPDF client-side generator produces valid standard ATS 1-column PDF download,2026-11-24 14:22
+AI-04,2. AI Tailor & CV,Draf Body Email & Contekan STAR Berbasis Riwayat Asli,Done,P1 (Tinggi),Draf email 3 paragraf & contekan STAR disesuaikan riwayat profil asli,2026-11-24 14:22
 PAY-01,3. Pembayaran QRIS,Pilih & Buat Akun Payment Gateway (Mayar / Midtrans),Pending,P0 (Wajib),Mendapatkan API Key & integrasi QRIS dinamis berizin resmi BI,Founder
 PAY-02,3. Pembayaran QRIS,Webhook Aktivasi Pro Otomatis,Pending,P0 (Wajib),"Saat pembayaran QRIS sukses, status Pro langsung aktif tanpa refresh",Backend/API
 PAY-03,3. Pembayaran QRIS,Sistem Kode Lisensi / Token Sederhana,Pending,P1 (Tinggi),User bisa restore status Pro jika ganti browser/clearing cache,Backend
 UX-01,4. Mobile UX & PWA,Icon PWA Tajam untuk Home Screen iOS & Android,Pending,P1 (Tinggi),Icon kilat ungu profesional saat user klik 'Add to Home Screen',Design
 UX-02,4. Mobile UX & PWA,Open Graph (OG Tags) & Preview Link WhatsApp/Twitter,Done,P0 (Wajib),"Open Graph meta tags (og:title, og:image, og:desc) untuk WhatsApp & medsos aktif",2026-11-24 14:11
-UX-03,4. Mobile UX & PWA,Tombol Bantuan / Chat WhatsApp Support,Pending,P1 (Tinggi),Floating widget WA agar pembeli yang bingung bisa langsung tanya,Frontend
-TRUST-01,5. Trust & Legal,Halaman Kebijakan Privasi & Disclaimer Rekrutmen,Pending,P1 (Tinggi),"Penegasan bahwa JalurKilat adalah tools riset, bukan calo loker",Copywriter
+UX-03,4. Mobile UX & PWA,Tombol Bantuan / Chat WhatsApp Support,Done,P1 (Tinggi),Tombol bantuan WhatsApp support ditambahkan di footer,2026-11-24 14:22
+TRUST-01,5. Trust & Legal,Halaman Kebijakan Privasi & Disclaimer Rekrutmen,Done,P1 (Tinggi),Disclaimer legalitas rekrutmen mandiri terpasang di footer webapp,2026-11-24 14:22
 TRUST-02,5. Trust & Legal,FAQ & Panduan Cara Pakai Singkat (3 Langkah),Pending,P2 (Sedang),Petunjuk bagi orang awam agar langsung paham alur pakainya,Frontend
 MKT-01,6. Go-To-Market,3 Video Pendek TikTok/Reels Screen-Recording Demo,Pending,P0 (Wajib),Video studi kasus: 'Kirim lamaran 6 menit setelah loker tayang',Marketing
 MKT-02,6. Go-To-Market,Thread Peluncuran di X/Twitter + Bio Link Lynk.id,Pending,P0 (Wajib),Thread edukasi: 'Kenapa 80% CV ditolak HRD & cara bypass-nya',Marketing

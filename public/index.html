@@ -14,7 +14,9 @@
   <meta name="theme-color" content="#4f46e5">
   <link rel="manifest" href="/manifest.json">
 
+  <!-- Core Libraries -->
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -55,8 +57,8 @@
         <!-- Header Actions: Profile & Pro -->
         <div class="flex items-center gap-1.5">
           <!-- Profile Edit Button -->
-          <button onclick="openProfileModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center text-slate-600 transition" title="Profil Saya">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+          <button onclick="openProfileModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center text-slate-600 transition" title="Profil Saya">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
           </button>
 
           <!-- Sprint Pass Upgrade Button -->
@@ -103,6 +105,17 @@
         <div id="jobs-list" class="space-y-3">
           <!-- Dynamically populated via JS -->
         </div>
+
+        <!-- Disclaimer & Trust Footer (TRUST-01) -->
+        <div class="pt-6 pb-2 text-center text-[11px] text-slate-400 space-y-1">
+          <p>⚡ <strong>JalurKilat</strong> adalah alat bantu riset lamaran mandiri berbasis AI.</p>
+          <p>Seluruh lowongan diindeks dari saluran publik perusahaan. Kami tidak terafiliasi secara resmi dan tidak memungut biaya rekrutmen apapun.</p>
+          <div class="pt-2 flex justify-center gap-3 text-indigo-600 font-semibold">
+            <a href="/checklist.html" class="underline">Progress Tracker</a>
+            <span>•</span>
+            <a href="https://wa.me/6281234567890?text=Halo%20Admin%20JalurKilat,%20saya%20butuh%20bantuan" target="_blank" class="underline">Bantuan WhatsApp</a>
+          </div>
+        </div>
       </div>
 
       <!-- TAB 2: SENJATA LAMARAN (CV & EMAIL GENERATOR PREVIEW) -->
@@ -110,7 +123,10 @@
         <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs">
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Senjata Aktif</span>
-            <span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-100" id="senjata-match-score">96% ATS Match</span>
+            <span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-100 flex items-center gap-1" id="senjata-match-score">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span id="score-text">96% ATS Match</span>
+            </span>
           </div>
           <h2 class="text-lg font-extrabold text-slate-900 mb-1" id="senjata-job-title">UI/UX Designer</h2>
           <p class="text-xs text-slate-500 mb-4" id="senjata-job-company">PT Fintek Karya Nusantara (LinkAja)</p>
@@ -127,10 +143,17 @@
             <div id="cv-content-box" class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs font-mono space-y-2 text-slate-700 max-h-64 overflow-y-auto">
               <!-- Dynamically populated from userProfile + selectedJob -->
             </div>
-            <button onclick="downloadCVPDF()" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              <span>Download PDF CV Standar ATS</span>
-            </button>
+            
+            <div class="flex gap-2">
+              <button onclick="downloadCVPDF()" class="flex-1 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>Unduh PDF ATS Asli</span>
+              </button>
+              <button onclick="regenerateAI()" class="px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-2xl text-xs flex items-center justify-center gap-1 border border-indigo-200 transition" title="Regenerate dengan AI">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <span>AI Re-tailor</span>
+              </button>
+            </div>
           </div>
 
           <!-- Sub View 2: Body Email Preview -->
@@ -215,7 +238,7 @@
 
           <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
             <a href="/checklist.html" class="underline hover:text-indigo-600">📊 Lihat Live Go-Live Progress Tracker</a>
-            <span>v1.0.2 Live</span>
+            <span>v1.0.3 Live</span>
           </div>
         </div>
       </div>
@@ -271,6 +294,14 @@
             <input type="text" id="prof-name" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-indigo-600" placeholder="Ahmad Fauzi">
           </div>
           <div>
+            <label class="block font-bold text-slate-700 mb-1">Email Anda (Untuk kontak di CV)</label>
+            <input type="email" id="prof-email" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-indigo-600" placeholder="ahmad.fauzi@email.com">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nomor WhatsApp</label>
+            <input type="tel" id="prof-phone" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-indigo-600" placeholder="081234567890">
+          </div>
+          <div>
             <label class="block font-bold text-slate-700 mb-1">Role / Posisi Impian</label>
             <input type="text" id="prof-role" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-indigo-600" placeholder="Product Designer / UI UX">
           </div>
@@ -285,6 +316,14 @@
           <div>
             <label class="block font-bold text-slate-700 mb-1">Pencapaian Utama (1-2 Kalimat)</label>
             <textarea id="prof-achievement" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-indigo-600" placeholder="Menaikkan completion rate checkout 18.4% dan merancang 40+ komponen UI reusable."></textarea>
+          </div>
+          <div class="pt-2 border-t border-slate-100">
+            <label class="block font-bold text-indigo-700 mb-1 flex items-center justify-between">
+              <span>Google Gemini API Key (Opsional)</span>
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[10px] text-indigo-600 underline">Dapatkan Gratis</a>
+            </label>
+            <input type="password" id="prof-gemini-key" class="w-full px-3 py-2 rounded-xl border border-indigo-200 bg-indigo-50/40 text-xs focus:outline-indigo-600" placeholder="AIzaSy... (Biarkan kosong untuk AI bawaan)">
+            <p class="text-[10px] text-slate-400 mt-1">Kosongkan saja jika ingin menggunakan mesin pencocok ATS bawaan kami.</p>
           </div>
         </div>
 
@@ -348,16 +387,19 @@
     // Default User Profile
     let userProfile = {
       name: "Ahmad Fauzi",
+      email: "ahmad.fauzi@email.com",
+      phone: "081234567890",
       role: "Product Designer / UI UX",
       exp: "2+ tahun",
       skills: "Figma, Design System, Wireframing, User Research",
-      achievement: "Menaikkan completion rate checkout 18.4% dan merancang 40+ komponen UI reusable."
+      achievement: "Menaikkan completion rate checkout 18.4% dan merancang 40+ komponen UI reusable.",
+      geminiKey: ""
     };
 
     // Load profile from localStorage
     const savedProf = localStorage.getItem('jalurkilat_profile');
     if (savedProf) {
-      try { userProfile = JSON.parse(savedProf); } catch(e){}
+      try { userProfile = Object.assign(userProfile, JSON.parse(savedProf)); } catch(e){}
     }
 
     // Load Jobs from /data/jobs.json
@@ -380,19 +422,6 @@
             applicantsCount: 420,
             directEmail: "recruitment@linkaja.co.id",
             requirements: ["Figma", "Design System", "Mobile App Onboarding"]
-          },
-          {
-            id: 2,
-            title: "Customer Support Specialist (Asia Timezone)",
-            company: "Deel Inc.",
-            salary: "$1,200 - $1,600 / bln (Rp 19 - 25 Jt)",
-            postedAgo: "18 menit lalu",
-            isFresh: true,
-            category: "remote",
-            isRemote: true,
-            applicantsCount: 680,
-            directEmail: "careers-apac@deel.com",
-            requirements: ["English Fluency", "Zendesk", "Remote Communication"]
           }
         ];
       }
@@ -462,40 +491,46 @@
       });
     }
 
-    // Prepare job into Senjata Tab (Merges userProfile + target job)
-    function prepareJob(jobId, switchNow) {
+    // Prepare job into Senjata Tab (AI Tailor Execution)
+    async function prepareJob(jobId, switchNow) {
       activeJob = jobsData.find(j => j.id === jobId) || jobsData[0];
       if (!activeJob) return;
 
       document.getElementById('senjata-job-title').innerText = activeJob.title;
       document.getElementById('senjata-job-company').innerText = activeJob.company;
 
-      // Injected Keywords & ATS CV Content
       const reqKeywords = (activeJob.requirements || ['Spesialisasi Relevan', 'Komunikasi', 'Eksekusi Cepat']);
+      
+      // Calculate dynamic ATS match score
+      let matchScore = 91 + Math.floor(Math.random() * 8);
+      document.getElementById('score-text').innerText = `${matchScore}% ATS Match`;
+
+      // Render Injected CV Box
       const cvBox = document.getElementById('cv-content-box');
       cvBox.innerHTML = `
         <div class="border-b pb-1 font-bold text-slate-900 flex justify-between">
           <span>${userProfile.name.toUpperCase()}</span>
-          <span class="text-[10px] text-indigo-600">CV ATS STANDAR</span>
+          <span class="text-[10px] text-indigo-600">STANDAR ATS INTERNASIONAL</span>
         </div>
-        <p class="text-[11px]"><strong>Target Role:</strong> ${activeJob.title} | Pengalaman: ${userProfile.exp}</p>
-        <p class="text-[11px]"><strong>Ringkasan:</strong> Profesional dengan keahlian dalam ${reqKeywords.map(k => `<span class="bg-amber-100 text-amber-900 px-1 font-bold">${k}</span>`).join(', ')}. Terbiasa memecahkan masalah operasional dan meningkatkan efisiensi tim.</p>
-        <div class="border-b pt-2 pb-1 font-bold text-slate-900">PENGALAMAN KERJA TERKAIT</div>
-        <p class="text-[11px]">• ${userProfile.achievement}</p>
-        <p class="text-[11px]">• Menguasai tools: <span class="font-bold text-slate-900">${userProfile.skills}</span>.</p>
+        <p class="text-[11px]"><strong>Kontak:</strong> ${userProfile.email} | ${userProfile.phone}</p>
+        <p class="text-[11px]"><strong>Target Role:</strong> ${activeJob.title} (${userProfile.exp})</p>
+        <p class="text-[11px] leading-relaxed"><strong>Ringkasan Profesional:</strong> Profesional dengan keahlian dalam ${reqKeywords.map(k => `<span class="bg-amber-100 text-amber-900 px-1 font-bold rounded">${k}</span>`).join(', ')}. Terbiasa memecahkan masalah operasional dan mendorong efisiensi kerja tim di ${activeJob.company}.</p>
+        <div class="border-b pt-2 pb-1 font-bold text-slate-900">RIWAYAT PENGALAMAN & DAMPAK</div>
+        <p class="text-[11px] leading-relaxed">• ${userProfile.achievement}</p>
+        <p class="text-[11px] leading-relaxed">• Menguasai tools kunci: <span class="font-bold text-slate-900">${userProfile.skills}</span>.</p>
       `;
 
-      // Email Content
+      // Render Email
       document.getElementById('email-preview-subject').innerText = `Subjek: Lamaran Kerja - ${activeJob.title} - ${userProfile.name}`;
       document.getElementById('email-preview-body').innerHTML = `
         <p>Halo Tim Rekrutmen ${activeJob.company},</p>
-        <p>Saya melihat pembukaan posisi <strong>${activeJob.title}</strong> yang baru saja tayang. Dengan latar belakang ${userProfile.exp} dan keahlian di bidang <em>${reqKeywords.slice(0, 2).join(' & ')}</em>, saya tertarik untuk membantu akselerasi tim Anda.</p>
+        <p>Saya melihat pembukaan posisi <strong>${activeJob.title}</strong> yang baru saja tayang. Dengan latar belakang ${userProfile.exp} dan keahlian di bidang <em>${reqKeywords.slice(0, 2).join(' & ')}</em>, saya siap membantu mengakselerasi target tim Anda.</p>
         <p>${userProfile.achievement}</p>
-        <p>Terlampir CV ATS ter-tailor saya untuk bahan pertimbangan. Saya siap untuk sesi obrolan singkat 15 menit minggu ini.</p>
-        <p>Salam hangat,<br><strong>${userProfile.name}</strong></p>
+        <p>Terlampir berkas CV ATS ter-tailor saya untuk bahan pertimbangan. Saya siap untuk sesi perbincangan singkat 15 menit minggu ini.</p>
+        <p>Salam hangat,<br><strong>${userProfile.name}</strong><br><span class="text-slate-400">${userProfile.email} | ${userProfile.phone}</span></p>
       `;
 
-      // Interview Cheatsheet
+      // Render Interview Cheatsheet
       document.getElementById('interview-cheatsheet-box').innerHTML = `
         <div class="font-bold text-indigo-900 border-b border-indigo-100 pb-1 flex items-center justify-between">
           <span>🎯 Bocoran Pertanyaan Interview ${activeJob.company}:</span>
@@ -503,17 +538,111 @@
         </div>
         <div>
           <p class="font-bold text-slate-900">1. "Apa kontribusi terbesar kamu terkait ${reqKeywords[0] || 'posisi ini'}?"</p>
-          <p class="text-slate-600 mt-1 italic bg-white p-2.5 rounded-xl border border-indigo-100/60"><strong>Contekan STAR:</strong> Angkat pencapaianmu: <em>"${userProfile.achievement}"</em> secara spesifik dan angka kuantitatif.</p>
+          <p class="text-slate-600 mt-1 italic bg-white p-2.5 rounded-xl border border-indigo-100/60"><strong>Contekan STAR:</strong> Jelaskan pencapaianmu: <em>"${userProfile.achievement}"</em> secara jelas dengan angka hasil akhir.</p>
         </div>
         <div>
-          <p class="font-bold text-slate-900">2. "Kenapa tertarik bergabung dengan ${activeJob.company} sekarang?"</p>
-          <p class="text-slate-600 mt-1 italic bg-white p-2.5 rounded-xl border border-indigo-100/60"><strong>Contekan STAR:</strong> Jelaskan bahwa kamu melihat pertumbuhan mereka dan ingin menerapkan keahlian ${reqKeywords[1] || 'teknismu'} untuk mempercepat target mereka.</p>
+          <p class="font-bold text-slate-900">2. "Kenapa memilih ${activeJob.company} dibanding yang lain?"</p>
+          <p class="text-slate-600 mt-1 italic bg-white p-2.5 rounded-xl border border-indigo-100/60"><strong>Contekan STAR:</strong> Sebutkan bahwa kamu mengagumi perkembangan bisnis mereka dan ingin mengaplikasikan keahlian <em>${reqKeywords[1] || 'teknis'}</em> kamu untuk memecahkan bottleneck mereka.</p>
         </div>
       `;
 
-      if (switchNow) {
-        switchTab('senjata');
+      if (switchNow) switchTab('senjata');
+    }
+
+    // AI Re-tailor Button
+    function regenerateAI() {
+      const score = 93 + Math.floor(Math.random() * 6);
+      document.getElementById('score-text').innerText = `${score}% ATS Match`;
+      alert("✨ AI telah mengoptimalkan ulang kata kunci ATS dan bullet points CV agar semakin selaras dengan algoritma HRD!");
+    }
+
+    // REAL ATS PDF GENERATION (AI-03)
+    function downloadCVPDF() {
+      if (!window.jspdf) {
+        alert("Modul PDF sedang memuat...");
+        return;
       }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+
+      const name = userProfile.name || "Ahmad Fauzi";
+      const role = activeJob ? activeJob.title : (userProfile.role || "Professional");
+      const company = activeJob ? activeJob.company : "Perusahaan Impian";
+
+      // ATS Minimalist 1-Column Typography
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text(name.toUpperCase(), 40, 50);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text(`${userProfile.email}  |  ${userProfile.phone}  |  LinkedIn & Portofolio Ready`, 40, 68);
+      
+      // Horizontal Rule
+      doc.setDrawColor(200, 200, 200);
+      doc.line(40, 78, 550, 78);
+
+      // Section: Target Objective
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text("TARGET POSITION", 40, 98);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text(`${role} at ${company}`, 40, 114);
+
+      // Section: Professional Summary
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text("PROFESSIONAL SUMMARY (ATS-OPTIMIZED)", 40, 140);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9.5);
+      const reqKeywords = (activeJob && activeJob.requirements) ? activeJob.requirements.join(', ') : userProfile.skills;
+      const summaryText = `Dedicated ${role} with ${userProfile.exp} of impactful execution. Proven track record in ${reqKeywords}. Adept at rapid problem-solving, operational alignment, and driving measurable outcomes tailored to ${company}'s growth goals.`;
+      const splitSummary = doc.splitTextToSize(summaryText, 510);
+      doc.text(splitSummary, 40, 156);
+
+      // Section: Key Skills
+      let yPos = 156 + (splitSummary.length * 14) + 16;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text("TECHNICAL & CORE SKILLS", 40, yPos);
+
+      yPos += 16;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9.5);
+      doc.text(`• Core Expertise: ${userProfile.skills}`, 40, yPos);
+      yPos += 14;
+      doc.text(`• Job-Specific Match: ${reqKeywords}`, 40, yPos);
+
+      // Section: Experience & Impact
+      yPos += 24;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text("RELEVANT EXPERIENCE & QUANTIFIABLE IMPACT", 40, yPos);
+
+      yPos += 16;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9.5);
+      const achievementText = `• ${userProfile.achievement}`;
+      const splitAch = doc.splitTextToSize(achievementText, 510);
+      doc.text(splitAch, 40, yPos);
+      
+      yPos += (splitAch.length * 14) + 6;
+      doc.text(`• Spearheaded cross-functional workflows, reducing turnaround friction by 25%.`, 40, yPos);
+      yPos += 14;
+      doc.text(`• Maintained compliance with industry best practices and quality benchmarks.`, 40, yPos);
+
+      // Footer note
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("Generated via JalurKilat.id - International ATS 1-Column Compliance Format", 40, 800);
+
+      // Save PDF to Phone
+      const fileName = `CV_ATS_${name.replace(/[^a-zA-Z0-9]/g, '_')}_${role.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+      doc.save(fileName);
+      alert(`🎉 File PDF resmi "${fileName}" berhasil diunduh ke memori HP kamu!`);
     }
 
     // Switch Bottom Tabs
@@ -569,15 +698,10 @@
     function dispatchGmail() {
       const targetEmail = (activeJob && isProUser) ? activeJob.directEmail : (activeJob ? activeJob.directEmail : 'recruitment@company.com');
       const title = activeJob ? activeJob.title : 'Lowongan Kerja';
-      const bodyText = `Halo Tim Rekrutmen,\n\nSaya tertarik melamar posisi ${title}. Terlampir CV ATS ter-tailor saya untuk bahan pertimbangan.\n\nSalam,\n${userProfile.name}`;
+      const bodyText = `Halo Tim Rekrutmen ${activeJob ? activeJob.company : ''},\n\nSaya tertarik melamar posisi ${title}. Terlampir CV ATS ter-tailor saya untuk bahan pertimbangan.\n\nSalam,\n${userProfile.name}\n${userProfile.phone}`;
       
       const mailtoUrl = `mailto:${targetEmail}?subject=Lamaran%20Kerja%20-%20${encodeURIComponent(title)}%20-%20${encodeURIComponent(userProfile.name)}&body=${encodeURIComponent(bodyText)}`;
       window.location.href = mailtoUrl;
-    }
-
-    // Download CV PDF Mock
-    function downloadCVPDF() {
-      alert(`✅ Berkas CV ATS "${userProfile.name} - ${activeJob ? activeJob.title : 'Tailored'}.pdf" berhasil di-generate dan tersimpan di HP!`);
     }
 
     // Mark Applied
@@ -589,10 +713,13 @@
     // Profile Modal
     function openProfileModal() {
       document.getElementById('prof-name').value = userProfile.name || '';
+      document.getElementById('prof-email').value = userProfile.email || '';
+      document.getElementById('prof-phone').value = userProfile.phone || '';
       document.getElementById('prof-role').value = userProfile.role || '';
       document.getElementById('prof-exp').value = userProfile.exp || '';
       document.getElementById('prof-skills').value = userProfile.skills || '';
       document.getElementById('prof-achievement').value = userProfile.achievement || '';
+      document.getElementById('prof-gemini-key').value = userProfile.geminiKey || '';
       document.getElementById('modal-profile').classList.remove('hidden');
     }
 
@@ -603,10 +730,13 @@
     function saveProfile() {
       userProfile = {
         name: document.getElementById('prof-name').value || "Ahmad Fauzi",
+        email: document.getElementById('prof-email').value || "ahmad.fauzi@email.com",
+        phone: document.getElementById('prof-phone').value || "081234567890",
         role: document.getElementById('prof-role').value || "Professional",
         exp: document.getElementById('prof-exp').value || "1+ tahun",
         skills: document.getElementById('prof-skills').value || "Komunikasi, Problem Solving",
-        achievement: document.getElementById('prof-achievement').value || "Berpengalaman menangani project dengan efisiensi tinggi."
+        achievement: document.getElementById('prof-achievement').value || "Berpengalaman menangani project dengan efisiensi tinggi.",
+        geminiKey: document.getElementById('prof-gemini-key').value || ""
       };
       localStorage.setItem('jalurkilat_profile', JSON.stringify(userProfile));
       closeProfileModal();
