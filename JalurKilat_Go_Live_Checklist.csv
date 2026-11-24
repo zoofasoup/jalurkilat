@@ -1,8 +1,8 @@
 ID Task,Kategori,Item Pekerjaan,Status,Prioritas,Deliverable / Keterangan,PIC / Owner
-DATA-01,1. Scraper & Feed,GitHub Actions Cron untuk Scraper Otomatis,Pending,P0 (Wajib),Scraper jalan tiap 2 jam & auto commit/push data loker baru,AI & Dev
-DATA-02,1. Scraper & Feed,Filter Deduping & Validasi Tanggal Loker,Pending,P0 (Wajib),Cegah loker lama terulang dan pastikan waktu 'X menit lalu' akurat,AI & Dev
+DATA-01,1. Scraper & Feed,GitHub Actions Cron untuk Scraper Otomatis,Done,P0 (Wajib),GitHub Actions cron workflow dibuat (.github/workflows/scraper.yml) & scraper.py terverifikasi,2026-11-24 14:08
+DATA-02,1. Scraper & Feed,Filter Deduping & Validasi Tanggal Loker,Done,P0 (Wajib),Deduplikasi MD5 hash (company_title) dan penghitungan waktu real-time aktif,2026-11-24 14:09
 DATA-03,1. Scraper & Feed,Formula Ekstraksi Email HRD yang Lebih Akurat,Pending,P1 (Tinggi),Pola deteksi email HRD (domain perusahaan) & profil rekruter LinkedIn,AI & Dev
-AI-01,2. AI Tailor & CV,Form Input Profil Pengguna (Simpan di HP),Pending,P0 (Wajib),"User bisa isi/edit pengalaman, skill, dan pendidikan sekali saja",Frontend
+AI-01,2. AI Tailor & CV,Form Input Profil Pengguna (Simpan di HP),Done,P0 (Wajib),Drawer modal profil pengguna + sync localStorage + injeksi dinamis ke CV & draf email,2026-11-24 14:11
 AI-02,2. AI Tailor & CV,Integrasi Gemini 1.5 Flash untuk Dynamic CV Tailoring,Pending,P0 (Wajib),AI beneran membedah JD loker dan menginjeksi keyword ke profil,Backend/API
 AI-03,2. AI Tailor & CV,Generator PDF Asli (Standard ATS 1 Kolom),Pending,P0 (Wajib),Tombol download menghasilkan file PDF riil yang siap kirim ke HRD,Frontend
 AI-04,2. AI Tailor & CV,Draf Body Email & Contekan STAR Berbasis Riwayat Asli,Pending,P1 (Tinggi),Isi email & jawaban interview menyebut data riil pengalaman pengguna,AI/Prompt
@@ -10,7 +10,7 @@ PAY-01,3. Pembayaran QRIS,Pilih & Buat Akun Payment Gateway (Mayar / Midtrans),P
 PAY-02,3. Pembayaran QRIS,Webhook Aktivasi Pro Otomatis,Pending,P0 (Wajib),"Saat pembayaran QRIS sukses, status Pro langsung aktif tanpa refresh",Backend/API
 PAY-03,3. Pembayaran QRIS,Sistem Kode Lisensi / Token Sederhana,Pending,P1 (Tinggi),User bisa restore status Pro jika ganti browser/clearing cache,Backend
 UX-01,4. Mobile UX & PWA,Icon PWA Tajam untuk Home Screen iOS & Android,Pending,P1 (Tinggi),Icon kilat ungu profesional saat user klik 'Add to Home Screen',Design
-UX-02,4. Mobile UX & PWA,Open Graph (OG Tags) & Preview Link WhatsApp/Twitter,Pending,P0 (Wajib),Banner gambar estetik & judul menarik saat link web dibagikan,Frontend
+UX-02,4. Mobile UX & PWA,Open Graph (OG Tags) & Preview Link WhatsApp/Twitter,Done,P0 (Wajib),"Open Graph meta tags (og:title, og:image, og:desc) untuk WhatsApp & medsos aktif",2026-11-24 14:11
 UX-03,4. Mobile UX & PWA,Tombol Bantuan / Chat WhatsApp Support,Pending,P1 (Tinggi),Floating widget WA agar pembeli yang bingung bisa langsung tanya,Frontend
 TRUST-01,5. Trust & Legal,Halaman Kebijakan Privasi & Disclaimer Rekrutmen,Pending,P1 (Tinggi),"Penegasan bahwa JalurKilat adalah tools riset, bukan calo loker",Copywriter
 TRUST-02,5. Trust & Legal,FAQ & Panduan Cara Pakai Singkat (3 Langkah),Pending,P2 (Sedang),Petunjuk bagi orang awam agar langsung paham alur pakainya,Frontend

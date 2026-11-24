@@ -5,15 +5,23 @@
     "company": "PT Fintek Karya Nusantara (LinkAja)",
     "location": "Jakarta Selatan (Hybrid)",
     "salary": "Rp 8.000.000 - Rp 11.000.000",
-    "postedAgo": "6 menit lalu",
+    "postedAgo": "Baru saja",
     "isFresh": true,
     "category": "creative",
     "isRemote": false,
     "applicantsCount": 420,
     "directEmail": "recruitment@linkaja.co.id",
     "hrLinkedIn": "https://www.linkedin.com/company/linkaja/people/",
-    "requirements": ["Figma", "Design System", "Mobile App Onboarding", "User Flow", "Fintech"],
-    "summary": "Bertanggung jawab merancang antarmuka onboarding dan transaksi mikro di aplikasi LinkAja dengan standar kemudahan akses pengguna."
+    "requirements": [
+      "Figma",
+      "Design System",
+      "Mobile App Onboarding",
+      "User Flow",
+      "Fintech"
+    ],
+    "summary": "Bertanggung jawab merancang antarmuka onboarding dan transaksi mikro di aplikasi LinkAja dengan standar kemudahan akses pengguna.",
+    "hash": "4ad0a446830f20c5a2b505542cd0951a",
+    "created_at": "2026-11-24T07:09:16.817096+00:00"
   },
   {
     "id": 2,
@@ -21,15 +29,22 @@
     "company": "Deel Inc.",
     "location": "Remote (Anywhere in Indonesia)",
     "salary": "$1,200 - $1,600 / bln (Rp 19 - 25 Jt)",
-    "postedAgo": "18 menit lalu",
+    "postedAgo": "Baru saja",
     "isFresh": true,
     "category": "remote",
     "isRemote": true,
     "applicantsCount": 680,
     "directEmail": "careers-apac@deel.com",
     "hrLinkedIn": "https://www.linkedin.com/company/deel/people/",
-    "requirements": ["English Fluency", "Zendesk", "Remote Communication", "Payroll Support"],
-    "summary": "Melayani pertanyaan klien global seputar kepatuhan kontrak dan penggajian remote melalui live chat dan ticketing system."
+    "requirements": [
+      "English Fluency",
+      "Zendesk",
+      "Remote Communication",
+      "Payroll Support"
+    ],
+    "summary": "Melayani pertanyaan klien global seputar kepatuhan kontrak dan penggajian remote melalui live chat dan ticketing system.",
+    "hash": "08d8bcbcc7a7ffe65ce9bad37d777be8",
+    "created_at": "2026-11-24T07:09:16.817096+00:00"
   },
   {
     "id": 3,
@@ -37,15 +52,22 @@
     "company": "Kopi Kenangan (Kenangan Brands)",
     "location": "Jakarta Barat (WFO)",
     "salary": "Rp 6.500.000 - Rp 8.500.000",
-    "postedAgo": "29 menit lalu",
+    "postedAgo": "Baru saja",
     "isFresh": true,
     "category": "creative",
     "isRemote": false,
     "applicantsCount": 310,
     "directEmail": "talent.acquisition@kopikenangan.com",
     "hrLinkedIn": "https://www.linkedin.com/company/kopi-kenangan/people/",
-    "requirements": ["TikTok Viral Growth", "CapCut / Premiere", "Copywriting Gen Z", "Trend Hijacking"],
-    "summary": "Memimpin produksi video pendek harian di TikTok/Reels untuk mendorong program promosi menu baru dan kemitraan."
+    "requirements": [
+      "TikTok Viral Growth",
+      "CapCut / Premiere",
+      "Copywriting Gen Z",
+      "Trend Hijacking"
+    ],
+    "summary": "Memimpin produksi video pendek harian di TikTok/Reels untuk mendorong program promosi menu baru dan kemitraan.",
+    "hash": "2fc81ba2ce0ed6acfc1c42cef2cb7951",
+    "created_at": "2026-11-24T07:09:16.817096+00:00"
   },
   {
     "id": 4,
@@ -53,15 +75,23 @@
     "company": "Ajaib Sekuritas",
     "location": "Jakarta Selatan (Hybrid)",
     "salary": "Rp 9.000.000 - Rp 13.000.000",
-    "postedAgo": "42 menit lalu",
+    "postedAgo": "Baru saja",
     "isFresh": false,
     "category": "tech",
     "isRemote": false,
     "applicantsCount": 540,
     "directEmail": "tech-hiring@ajaib.co.id",
     "hrLinkedIn": "https://www.linkedin.com/company/ajaib-investasi/people/",
-    "requirements": ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "REST API"],
-    "summary": "Membangun tampilan trading web yang responsif, cepat, dan terintegrasi dengan WebSocket pasar saham dan reksadana."
+    "requirements": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "REST API"
+    ],
+    "summary": "Membangun tampilan trading web yang responsif, cepat, dan terintegrasi dengan WebSocket pasar saham dan reksadana.",
+    "hash": "18663465f7a0e5eab115e4e7b3e89d13",
+    "created_at": "2026-11-24T07:09:16.817096+00:00"
   },
   {
     "id": 5,
@@ -69,14 +99,21 @@
     "company": "J&T Cargo Indonesia",
     "location": "Jakarta Utara (WFO)",
     "salary": "Rp 5.500.000 - Rp 7.000.000",
-    "postedAgo": "55 menit lalu",
+    "postedAgo": "Baru saja",
     "isFresh": false,
     "category": "admin",
     "isRemote": false,
     "applicantsCount": 230,
     "directEmail": "hrd.recruitment@jtcargo.id",
     "hrLinkedIn": "https://www.linkedin.com/company/jt-cargo/people/",
-    "requirements": ["Microsoft Excel VLOOKUP", "Data Entry", "Logistics Documentation", "Inventory Tracking"],
-    "summary": "Mengelola manifes pengiriman harian, rekonsiliasi data resi armada, dan penyusunan laporan operasional logistik."
+    "requirements": [
+      "Microsoft Excel VLOOKUP",
+      "Data Entry",
+      "Logistics Documentation",
+      "Inventory Tracking"
+    ],
+    "summary": "Mengelola manifes pengiriman harian, rekonsiliasi data resi armada, dan penyusunan laporan operasional logistik.",
+    "hash": "bcf2f0104d72acfbce18e22f30e47671",
+    "created_at": "2026-11-24T07:09:16.817096+00:00"
   }
 ]
